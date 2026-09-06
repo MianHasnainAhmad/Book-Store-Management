@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meezan Book Store — Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- MOBILE TOP BAR -->
+<header class="mobile-topbar">
+  <button id="menu-toggle" class="menu-toggle" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+  <div class="mobile-brand">
+    <span class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 9C15.5 6 8.5 6 4.5 8V29.5C8.5 27.5 15.5 27.5 20 30.5C24.5 27.5 31.5 27.5 35.5 29.5V8C31.5 6 24.5 6 20 9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M20 9V30.5" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </span>
+    <span class="mobile-brand-text">MEEZAN BOOK STORE</span>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="logo-mark">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 9C15.5 6 8.5 6 4.5 8V29.5C8.5 27.5 15.5 27.5 20 30.5C24.5 27.5 31.5 27.5 35.5 29.5V8C31.5 6 24.5 6 20 9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M20 9V30.5" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </span>
+      <div class="brand-text">
+        <h1>Meezan<br>Book Store</h1>
+        <p class="brand-tag">Shop management</p>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-btn active" data-view="dashboard">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.2"/></svg></span>
+        Dashboard
+      </button>
+      <button class="nav-btn" data-view="sell">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-2.5-1.5L13 21l-2.5-1.5L8 21l-2-1.5V3z"/><line x1="8.5" y1="8" x2="15.5" y2="8"/><line x1="8.5" y1="12" x2="15.5" y2="12"/></svg></span>
+        Sell / Billing
+      </button>
+      <button class="nav-btn" data-view="inventory">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span>
+        Stock Register
+      </button>
+      <button class="nav-btn" data-view="add-item">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+        Add Item
+      </button>
+      <button class="nav-btn" data-view="reports">
+        <span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="4" y1="20" x2="20" y2="20"/><rect x="6" y="12" width="3" height="6"/><rect x="11" y="8" width="3" height="10"/><rect x="16" y="4" width="3" height="14"/></svg></span>
+        Reports
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p class="footer-title">Backup &amp; Data</p>
+      <p class="footer-note">All data is saved in this browser only.</p>
+      <button id="export-data" class="ghost-btn">Export Backup (.json)</button>
+      <label class="ghost-btn file-label">
+        Import Backup
+        <input type="file" id="import-data" accept="application/json" hidden>
+      </label>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view active">
+      <header class="view-head">
+        <h2>Dashboard</h2>
+        <p id="today-date" class="subtle"></p>
+      </header>
+
+      <div class="stat-grid">
+        <div class="stat-block accent-gold">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><line x1="6" y1="9" x2="6" y2="9.01"/><line x1="18" y1="15" x2="18" y2="15.01"/></svg></span>
+          <div class="stat-info">
+            <span class="stat-label">Today's Sales</span>
+            <span class="stat-value" id="stat-today-sales">Rs. 0</span>
+            <span class="stat-hint" id="stat-today-sales-hint">0 bills today</span>
+          </div>
+        </div>
+        <div class="stat-block accent-sage">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg></span>
+          <div class="stat-info">
+            <span class="stat-label">Today's Profit</span>
+            <span class="stat-value" id="stat-today-profit">Rs. 0</span>
+            <span class="stat-hint">After cost of goods</span>
+          </div>
+        </div>
+        <div class="stat-block accent-ink">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-2.5-1.5L13 21l-2.5-1.5L8 21l-2-1.5V3z"/><line x1="8.5" y1="8" x2="15.5" y2="8"/><line x1="8.5" y1="12" x2="15.5" y2="12"/></svg></span>
+          <div class="stat-info">
+            <span class="stat-label">Bills Today</span>
+            <span class="stat-value" id="stat-today-bills">0</span>
+            <span class="stat-hint">Since midnight</span>
+          </div>
+        </div>
+        <div class="stat-block accent-warn">
+          <span class="stat-icon warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l10 18H2L12 3z"/><line x1="12" y1="9" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg></span>
+          <div class="stat-info">
+            <span class="stat-label">Low Stock Items</span>
+            <span class="stat-value" id="stat-low-stock">0</span>
+            <span class="stat-hint" id="stat-low-stock-hint">5 or fewer units left</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Remaining Stock</h3>
+          <input type="search" id="dash-search" placeholder="Search item, category or school...">
+        </div>
+        <div class="table-wrap">
+          <table id="dash-stock-table">
+            <thead>
+              <tr><th>Item</th><th>Category</th><th>School/Class</th><th>Available Stock</th><th>Sale Price</th><th>Status</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Recent Bills</h3>
+        <div class="table-wrap">
+          <table id="recent-bills-table">
+            <thead>
+              <tr><th>Bill No</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th></th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SELL / BILLING -->
+    <section id="view-sell" class="view">
+      <header class="view-head">
+        <h2>New Bill</h2>
+        <p class="subtle">Select an item from the list, set the quantity, and add it to the bill.</p>
+      </header>
+
+      <div class="sell-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Available Items</h3>
+            <input type="search" id="sell-search" placeholder="Search name, category or school...">
+          </div>
+          <div class="table-wrap sell-item-list">
+            <table id="sell-item-table">
+              <thead>
+                <tr><th>Item</th><th>School/Class</th><th>Stock</th><th>Unit Price</th><th>Qty</th><th></th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel cart-panel">
+          <h3>Bill / Cart</h3>
+          <div class="table-wrap">
+            <table id="cart-table">
+              <thead>
+                <tr><th>Item</th><th>Qty</th><th>Unit Price</th><th>Amount</th><th></th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p id="cart-empty-msg" class="empty-note">Your bill is empty. Select an item from the stock list to add it.</p>
+
+          <div class="summary-box">
+            <div class="summary-row"><span>Subtotal</span><span id="sum-subtotal">Rs. 0</span></div>
+            <div class="summary-row discount-row">
+              <span>Discount (Rs.)</span>
+              <input type="number" id="cart-discount" min="0" step="1" value="0">
+            </div>
+            <div class="summary-row total-row"><span>Grand Total</span><span id="sum-total">Rs. 0</span></div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Customer Name (optional)</label>
+              <input type="text" id="cart-customer-name" placeholder="e.g. Ali">
+            </div>
+            <div class="field">
+              <label>Phone Number (optional)</label>
+              <input type="tel" id="cart-customer-phone" placeholder="03xx-xxxxxxx">
+            </div>
+          </div>
+          <div class="field">
+            <label>Note (optional)</label>
+            <input type="text" id="cart-note" placeholder="e.g. 5th class books">
+          </div>
+
+          <button id="checkout-btn" class="primary-btn" disabled>Create Bill</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STOCK / INVENTORY -->
+    <section id="view-inventory" class="view">
+      <header class="view-head">
+        <h2>Stock Register</h2>
+        <p class="subtle">Full list of items in stock, with current stock value.</p>
+      </header>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>All Items</h3>
+          <div class="filter-row">
+            <input type="search" id="inv-search" placeholder="Search item / school...">
+            <select id="inv-category-filter">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="inventory-table">
+            <thead>
+              <tr>
+                <th>Item</th><th>Category</th><th>School/Class</th>
+                <th>Available Stock</th><th>Cost Price</th><th>Sale Price</th>
+                <th>Stock Value</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADD ITEM -->
+    <section id="view-add-item" class="view">
+      <header class="view-head">
+        <h2>Add New Item</h2>
+        <p class="subtle">Books, copies, registers, notebooks, guides, pens, pencils — anything the shop keeps in stock.</p>
+      </header>
+
+      <div class="panel form-panel">
+        <form id="add-item-form">
+          <div class="field">
+            <label>Item Name *</label>
+            <input type="text" id="f-name" placeholder="e.g. English Book Class 5" required>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Category *</label>
+              <select id="f-category" required>
+                <option value="Book">Book</option>
+                <option value="Copy">Copy</option>
+                <option value="Register">Register</option>
+                <option value="Notebook">Notebook</option>
+                <option value="Guide">Guide</option>
+                <option value="Pencil">Pencil</option>
+                <option value="Pen">Pen</option>
+                <option value="Stationery">Other Stationery</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>School / Class (if applicable)</label>
+              <input type="text" id="f-school" placeholder="e.g. City Public School">
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Quantity *</label>
+              <input type="number" id="f-qty" min="0" step="1" required>
+            </div>
+            <div class="field">
+              <label>Cost Price (per item)</label>
+              <input type="number" id="f-cost" min="0" step="0.01" placeholder="What it cost you">
+            </div>
+            <div class="field">
+              <label>Sale Price (per item) *</label>
+              <input type="number" id="f-price" min="0" step="0.01" required>
+            </div>
+          </div>
+
+          <button type="submit" class="primary-btn">Add Item</button>
+          <p id="add-item-msg" class="form-msg"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section id="view-reports" class="view">
+      <header class="view-head">
+        <h2>Reports</h2>
+        <p class="subtle">Daily sales and profit record.</p>
+      </header>
+
+      <div class="stat-grid">
+        <div class="stat-block accent-gold">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><line x1="6" y1="9" x2="6" y2="9.01"/><line x1="18" y1="15" x2="18" y2="15.01"/></svg></span>
+          <div class="stat-info">
+            <span class="stat-label">Total Sales</span>
+            <span class="stat-value" id="stat-total-sales">Rs. 0</span>
+            <span class="stat-hint">All-time total</span>
+          </div>
+        </div>
+        <div class="stat-block accent-sage">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg></span>
+          <div class="stat-info">
+            <span class="stat-label">Total Profit</span>
+            <span class="stat-value" id="stat-total-profit">Rs. 0</span>
+            <span class="stat-hint">After cost of goods</span>
+          </div>
+        </div>
+        <div class="stat-block accent-ink">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-2.5-1.5L13 21l-2.5-1.5L8 21l-2-1.5V3z"/><line x1="8.5" y1="8" x2="15.5" y2="8"/><line x1="8.5" y1="12" x2="15.5" y2="12"/></svg></span>
+          <div class="stat-info">
+            <span class="stat-label">Total Bills</span>
+            <span class="stat-value" id="stat-total-bills">0</span>
+            <span class="stat-hint">All-time total</span>
+          </div>
+        </div>
+        <div class="stat-block accent-clay">
+          <span class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></span>
+          <div class="stat-info">
+            <span class="stat-label">Total Items Sold</span>
+            <span class="stat-value" id="stat-total-items">0</span>
+            <span class="stat-hint">All-time total</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Date Wise</h3>
+        <div class="table-wrap">
+          <table id="reports-table">
+            <thead>
+              <tr><th>Date</th><th>Bills</th><th>Items Sold</th><th>Sales</th><th>Profit</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- EDIT ITEM MODAL -->
+<div id="edit-modal" class="modal hidden">
+  <div class="modal-card form-card">
+    <h3>Edit Item</h3>
+    <form id="edit-item-form">
+      <input type="hidden" id="edit-id">
+      <div class="field">
+        <label>Item Name *</label>
+        <input type="text" id="e-name" required>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Category *</label>
+          <select id="e-category" required>
+            <option value="Book">Book</option>
+            <option value="Copy">Copy</option>
+            <option value="Register">Register</option>
+            <option value="Notebook">Notebook</option>
+            <option value="Guide">Guide</option>
+            <option value="Pencil">Pencil</option>
+            <option value="Pen">Pen</option>
+            <option value="Stationery">Other Stationery</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>School / Class</label>
+          <input type="text" id="e-school">
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Cost Price *</label>
+          <input type="number" id="e-cost" min="0" step="0.01">
+        </div>
+        <div class="field">
+          <label>Sale Price *</label>
+          <input type="number" id="e-price" min="0" step="0.01" required>
+        </div>
+      </div>
+      <p class="info-note">Quantity is not changed here — use "Restock" from the Stock Register.</p>
+      <p id="edit-msg" class="form-msg"></p>
+      <div class="modal-actions no-print">
+        <button type="submit" class="primary-btn">Save Changes</button>
+        <button type="button" id="close-edit-btn" class="ghost-btn light">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- BILL / RECEIPT MODAL -->
+<div id="bill-modal" class="modal hidden">
+  <div class="modal-card receipt" id="receipt-content">
+    <!-- filled by JS -->
+  </div>
+  <div class="modal-actions no-print">
+    <button id="print-bill-btn" class="primary-btn">Print Bill</button>
+    <button id="close-bill-btn" class="ghost-btn light">Close</button>
+  </div>
+</div>
+
+<div id="toast-container" class="toast-container"></div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
