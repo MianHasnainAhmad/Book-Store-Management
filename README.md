@@ -4,6 +4,8 @@ A shop management app for a book and stationery store, built with plain HTML, CS
 
 It covers the daily work of a small shop: keeping a stock register, making bills for customers, and checking how much was sold and earned each day.
 
+![Dashboard with today's sales, profit, bills and remaining stock](screenshots/dashboard.jpg)
+
 ## Features
 
 - **Dashboard**: today's sales, today's profit, number of bills, and a low-stock counter, plus a searchable list of remaining stock and the most recent bills
